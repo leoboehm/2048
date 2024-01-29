@@ -21,4 +21,32 @@ class App:
 
 if __name__ == "__main__":
     app = App()
-    # app.start()    
+    # app.start()   
+    
+    beige = (243,217,177) 
+    background_colour = beige
+    #define dimensions of screen object
+    display = pygame.display.set_mode((800,700))
+
+    #set the caption of the screen
+    pygame.display.set_caption('2048')
+
+    #fill the background colour to the screen
+    display.fill(background_colour)
+
+    #update the display using flip
+    pygame.display.flip()
+
+    #variable to keep our game loop running
+    running = True
+
+    #game loop
+    while running:
+
+        for event in pygame.event.get():
+            #check for quit event
+            if event.type == pygame.QUIT:
+                running = False
+
+    #quit pygame after closing window
+                pygame.quit()

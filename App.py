@@ -2,54 +2,42 @@ import pygame
 from pygame.locals import *
 
 class App:
-    windowWidth = 0
-    windowHeight = 0
+    windowWidth = 500
+    windowHeight = 500
 
-    def __init__(self):
-        pygame.init()
-        pinfo = pygame.display.Info()
-        self.font = pygame.font.Font(pygame.font.get_default_font(), 36)
-
-        # self.windowWidth = pinfo.current_w -10
-        # self.windowHeight = pinfo.current_h -100
-
-        self._running = True
-    
-    def on_init(self):
-        self._display = pygame.display.set_mode((self.windowWidth, self.windowHeight), pygame.HWSURFACE)
-
-
-if __name__ == "__main__":
-    app = App()
-    # app.start() 
-    
+    # colors
     black = (0,0,0)  
     espresso = (54,17,0)
     burlywood4 = (139,1115,85)
     lightbrown = (190,149,111)
     beige = (243,217,177) 
     redbrown = (139,35,35)
+
+    def __init__(self):
+        pygame.init()
+        self._running = True
+        
+        self._display = pygame.display.set_mode((self.windowWidth,self.windowHeight))
     
-    background_colour = beige
+    def on_init(self):
+        pygame.display.set_caption('2048')
+        self._display.fill(self.beige)
+        pygame.display.flip()
+    
+    def main(self):
+        if self.on_init() == False:
+            self._running = False
 
-    display = pygame.display.set_mode((800,700))
+        while self._running:
+            for event in pygame.event.get():
+                #check for quit event
+                if event.type == pygame.QUIT:
+                    self._running = False
+        
+        pygame.quit()
 
-    pygame.display.set_caption('2048')
 
-    display.fill(background_colour)
 
-    pygame.display.flip()
-
-    #variable to keep our game loop running
-    running = True
-
-    #game loop
-    while running:
-
-        for event in pygame.event.get():
-            #check for quit event
-            if event.type == pygame.QUIT:
-                running = False
-
-    #quit pygame after closing window
-                pygame.quit()
+if __name__ == "__main__":
+    app = App()
+    app.main() 

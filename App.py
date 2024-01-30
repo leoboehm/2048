@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
-
+from Tile import *
+from Board import *
 class App:
     windowWidth = 500
     windowHeight = 500

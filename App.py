@@ -21,20 +21,23 @@ class App:
 
 if __name__ == "__main__":
     app = App()
-    # app.start()   
+    # app.start() 
     
+    black = (0,0,0)  
+    espresso = (54,17,0)
+    burlywood4 = (139,1115,85)
+    lightbrown = (190,149,111)
     beige = (243,217,177) 
+    redbrown = (139,35,35)
+    
     background_colour = beige
-    #define dimensions of screen object
+
     display = pygame.display.set_mode((800,700))
 
-    #set the caption of the screen
     pygame.display.set_caption('2048')
 
-    #fill the background colour to the screen
     display.fill(background_colour)
 
-    #update the display using flip
     pygame.display.flip()
 
     #variable to keep our game loop running

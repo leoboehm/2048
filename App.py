@@ -9,6 +9,7 @@ class App:
 
     # colors
     black = (0,0,0)  
+    white = (255, 255, 255)
     espresso = (54,17,0)
     burlywood4 = (139,1115,85)
     lightbrown = (190,149,111)

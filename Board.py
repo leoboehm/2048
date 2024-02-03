@@ -9,3 +9,5 @@ class Board:
 
     def createDisplay(self):
         return pygame.display.set_mode((self.width, self.height), pygame.HWSURFACE)
+
+

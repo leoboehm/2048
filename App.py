@@ -25,6 +25,7 @@ class App:
     def on_init(self):
         pygame.display.set_caption('2048')
         self._display.fill(self.beige)
+        self.board = Board(self._display)
         pygame.display.flip()
     
     def main(self):

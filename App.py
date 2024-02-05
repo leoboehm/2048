@@ -44,8 +44,21 @@ class App:
     def getScore(self):
         self.score += self.board.sumScore()
     
-    # def getKeyPressed(self):
+    def getKeyPressed(self):
     #     # check which key gets pressed and respond correspondingly
+        keys = pygame.key.get_pressed()
+
+        if keys[K_RIGHT]:
+            return 1
+        if keys[K_LEFT]:
+            return 2
+        if keys[K_UP]:
+            return 3
+        if keys[K_DOWN]:
+            return 4
+        
+        if keys[K_ESCAPE]:
+            self._running = False
 
     # def gameOver(self):
     #     # end the game (Without closing the window)

@@ -26,9 +26,9 @@ class Board:
 
         #main loop
         while not done:
-            for event in pygame.event.get(): #User did something
-                if event.type == pygame.QUIT: #If user clicked close
-                    done = True      #exit this loop  
+            for event in pygame.event.get(): 
+                if event.type == pygame.QUIT:
+                    done = True     
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     #user clicks the mouse + get the position
                     pos = pygame.mouse.get_pos()

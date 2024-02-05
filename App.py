@@ -1,11 +1,12 @@
 import pygame
 from pygame.locals import *
-from Tile import *
 from Board import *
 
 class App:
     windowWidth = 500
     windowHeight = 500
+
+    score = 0
 
     # colors
     black = (0,0,0)  
@@ -40,6 +41,17 @@ class App:
         
         pygame.quit()
 
+    def getScore(self):
+        self.score += self.board.sumScore()
+    
+    # def getKeyPressed(self):
+    #     # check which key gets pressed and respond correspondingly
+
+    # def gameOver(self):
+    #     # end the game (Without closing the window)
+    
+    # def resetGame(self):
+    #     # reset game
 
 
 if __name__ == "__main__":

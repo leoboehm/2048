@@ -20,7 +20,6 @@ class App:
     def __init__(self):
         pygame.init()
         self._running = True
-        
         self._display = pygame.display.set_mode((self.windowWidth,self.windowHeight))
     
     def on_init(self):
@@ -38,19 +37,26 @@ class App:
                 #check for quit event
                 if event.type == pygame.QUIT:
                     self._running = False
-        
+                else:
+                    if self.board.canMove():
+                        self.board.moveTiles(self.getKeyPressed())
+
+                pass
+                self.board.drawGrid()
+                self.updateScore()
+
         pygame.quit()
 
-    def getScore(self):
+    def updateScore(self):
         self.score += self.board.sumScore()
     
     def getKeyPressed(self):
-    #     # check which key gets pressed and respond correspondingly
+        # check which key gets pressed and respond correspondingly
         keys = pygame.key.get_pressed()
 
-        if keys[K_RIGHT]:
-            return 1
         if keys[K_LEFT]:
+            return 1
+        if keys[K_RIGHT]:
             return 2
         if keys[K_UP]:
             return 3

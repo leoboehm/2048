@@ -31,7 +31,6 @@ class Board:
     def __init__(self, display):
         self._display = display
         self.initGrid()
-        self.draw_grid()
     
     def initGrid(self):
         # create a 4x4 matrix
@@ -43,7 +42,9 @@ class Board:
         self.spawnTile()
         self.spawnTile()
 
-    def draw_grid(self) :  
+        self.drawGrid()
+
+    def drawGrid(self) :  
         width = 55
         height = 55
         margin = 5
@@ -72,7 +73,7 @@ class Board:
 
     def moveTiles(self, direction):
         # move tiles and save new coordinates
-        return None
+        print("moveTiles - direction: ", direction)
     
     # input tile: [first level grid index, second level grid index]
     def mergeTiles(self, direction):

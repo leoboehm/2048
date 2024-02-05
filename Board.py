@@ -1,10 +1,17 @@
 import pygame
+import random
 
 class Board:
     width: 100
     height: 100
 
     grid = []
+
+    # directions
+    # 1 = "left"
+    # 2 = "right"
+    # 3 = "up"
+    # 4 = "down"
     
     colordict = {
         0: (255,255,255), # white
@@ -23,76 +30,61 @@ class Board:
     
     def __init__(self, display):
         self._display = display
+        self.initGrid()
         self.draw_grid()
     
+    def initGrid(self):
+        # create a 4x4 matrix
+        for row in range(4):
+            self.grid.append([])
+            for col in range(4):
+                self.grid[row].append(0)
+        
+        self.spawnTile()
+        self.spawnTile()
+
     def draw_grid(self) :  
         width = 55
         height = 55
         margin = 5
 
-        #create a 2 dimensional array
         for row in range(4):
-            self.grid.append([])
             for col in range(4):
-                self.grid[row].append(0)
-        clock = pygame.time.Clock()
-
-        done = False
-
-        #main loop
-        while not done:
-            for event in pygame.event.get(): #User did something
-                if event.type == pygame.QUIT: #If user clicked close
-                    done = True      #exit this loop  
-                
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    #user clicks the mouse + get the position
-                    pos = pygame.mouse.get_pos()
-                    #change the x/y screen coordinates to self.grid coordinates
-                    col = pos[0] //(width + margin)
-                    row = pos[1] // (height + margin)
-
-                    # double value
-                    if self.grid[row][col] > 0:
-                        self.grid[row][col] = self.doubleValue(self.grid[row][col])
-                    else: self.grid[row][col] = 2
-
-                    print("Click", pos, "self.grid coordinates: ", row, col, "Grid: ", self.grid)
-           
-
-            for row in range(4):
-                for col in range(4):
-                    color = self.getTileColor(self.grid[row][col])
-                    pygame.draw.rect(self._display,
-                                    color,
-                                    [(margin + width)* col + margin,
-                                    (margin + height)* row + margin,
-                                    width,
-                                    height])
-
-            clock.tick(60)
+                color = self.getTileColor(self.grid[row][col])
+                pygame.draw.rect(self._display, color, [(margin + width)* col + margin,
+                                                        (margin + height) * row + margin,
+                                                        width, height])
 
             pygame.display.flip()
 
+    def spawnTile(self):
+        # spawn single tile on random free position
+        i = random.randint(0,3)
+        j = random.randint(0,3)
+
+        if self.grid[i][j] == 0:
+            self.grid[i][j] = random.choice([2, 4])
+        else: self.spawnTile()
+       
     def canMove(self):
         # check whether tile movement is possible
         return True
 
-    # def spawnTile(self):
-    #     # spawn single tile on random free position
-        
+    def moveTiles(self, direction):
+        # move tiles and save new coordinates
+        return None
+    
+    # input tile: [first level grid index, second level grid index]
+    def mergeTiles(self, direction):
+        # merge tiles and double their value if their values are identical
+        return None
+ 
     def getTileColor(self, value):
         return self.colordict[value]
     
     def doubleValue(self, value):
         return value * 2
     
-    # def moveTiles(self):
-    #     # move tiles and save new coordinates
-    
-    # def mergeTiles(self):
-    #     # merge tiles on movement if their values are identical
-
     def sumScore(self):
         # calculate score
         return 0

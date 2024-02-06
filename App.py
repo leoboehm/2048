@@ -50,11 +50,6 @@ class App:
                             self.board.rotateMatrix()
                             
                         self.board.drawGrid()
-                        self.updateScore()
-                            
-                        # self.board.moveTiles(self.getKeyPressed())
-                        # self.board.mergeTiles()
-                        # self.board.spawnTile()
                             
                 else: self.endGame()
 
@@ -63,22 +58,23 @@ class App:
 
         pygame.quit()
 
-    def updateScore(self):
-        self.score += self.board.sumScore()
+    def getScore(self):
+        self.score = self.board.score
     
     def getKeyPressed(self):
-        # check which key gets pressed and respond correspondingly
+        # check which key gets pressed and return rotations
         keys = pygame.key.get_pressed()
 
         if keys[K_LEFT]:
-            return 1
-        if keys[K_RIGHT]:
-            return 3
-        if keys[K_UP]:
             return 0
-        if keys[K_DOWN]:
+        if keys[K_RIGHT]:
             return 2
+        if keys[K_UP]:
+            return 1
+        if keys[K_DOWN]:
+            return 3
         
+        # end game on esc
         if keys[K_ESCAPE]:
             self._running = False
         
@@ -91,8 +87,12 @@ class App:
     
     # def resetGame(self):
     #     # reset game
+        
+    def resetGame(self):
+        # reset the game
+        self.score = 0
+        self.board = Board(self._display)
         ResetButton(400,400,50,50, 'Reset', print("Game Reset"))
-
 
 if __name__ == "__main__":
     app = App()

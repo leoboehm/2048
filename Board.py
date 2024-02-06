@@ -8,11 +8,7 @@ class Board:
 
     grid = []
 
-    # directions
-    # 1 = "left"
-    # 3 = "right"
-    # 0 = "up"
-    # 2 = "down"
+    score = 0
     
     colordict = {
         0: (255,255,255), # white
@@ -72,13 +68,14 @@ class Board:
             for col in range(4):
                 if self.grid[row][col] == 2048: return False
 
-        for i in range(4):
-            for j in range(1,4):
-                if self.grid[i][j-1] == 0 and self.grid[i][j] > 0:
-                    return True 
-                elif (self.grid[i][j-1] == self.grid[i][j]) and self.grid[i][j-1] != 0:
-                    return True
-        return False
+        # for i in range(4):
+        #     for j in range(1,4):
+        #         if self.grid[i][j-1] == 0 and self.grid[i][j] > 0:
+        #             return True 
+        #         elif (self.grid[i][j-1] == self.grid[i][j]) and self.grid[i][j-1] != 0:
+        #             return True
+        # return False
+        return True
 
     def moveTiles(self):
         # move tiles and save new coordinates
@@ -97,7 +94,7 @@ class Board:
                 if self.grid[i][k] == self.grid[i][k+1] and self.grid[i][k] != 0:
                     self.grid[i][k] = self.doubleValue(self.grid[i][k])
                     self.grid[i][k+1] = 0
-                    self.sumScore(self.grid[i][k])
+                    self.updateScore(self.grid[i][k])
                     self.moveTiles()
     
     def rotateMatrix(self):
@@ -119,7 +116,7 @@ class Board:
     def doubleValue(self, value):
         return value * 2
     
-    def sumScore(self):
+    def updateScore(self, value):
         # calculate score
-        return 0
+        self.score += value
         

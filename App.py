@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys, time
 from pygame.locals import *
 from Board import *
 
@@ -34,13 +34,32 @@ class App:
                 #check for quit event
                 if event.type == pygame.QUIT:
                     self._running = False
-                else:
-                    if self.board.canMove():
-                        self.board.moveTiles(self.getKeyPressed())
+
+                if self.board.canMove():
+                    if event.type == pygame.KEYDOWN:
+                        rotations = self.getKeyPressed()
+                        for i in range(0,rotations):
+                            self.board.rotateMatrix()
+ 
+                        if self.board.canMove():
+                            self.board.moveTiles()
+                            self.board.mergeTiles()
+                            self.board.spawnTile()
+ 
+                        for j in range(0,(4-rotations)%4):
+                            self.board.rotateMatrix()
+                            
+                        self.board.drawGrid()
+                        self.updateScore()
+                            
+                        # self.board.moveTiles(self.getKeyPressed())
+                        # self.board.mergeTiles()
+                        # self.board.spawnTile()
+                            
+                else: self.endGame()
 
                 pass
-                self.board.drawGrid()
-                self.updateScore()
+                pygame.display.update()
 
         pygame.quit()
 
@@ -54,17 +73,18 @@ class App:
         if keys[K_LEFT]:
             return 1
         if keys[K_RIGHT]:
-            return 2
-        if keys[K_UP]:
             return 3
+        if keys[K_UP]:
+            return 0
         if keys[K_DOWN]:
-            return 4
+            return 2
         
         if keys[K_ESCAPE]:
             self._running = False
 
-    # def gameOver(self):
-    #     # end the game (Without closing the window)
+    def endGame(self):
+        # end the game
+        self._running = False
     
     # def resetGame(self):
     #     # reset game

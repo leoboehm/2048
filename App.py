@@ -66,13 +66,13 @@ class App:
         keys = pygame.key.get_pressed()
 
         if keys[K_LEFT]:
-            return 1
-        if keys[K_RIGHT]:
-            return 3
-        if keys[K_UP]:
             return 0
-        if keys[K_DOWN]:
+        if keys[K_RIGHT]:
             return 2
+        if keys[K_UP]:
+            return 1
+        if keys[K_DOWN]:
+            return 3
         
         # end game on esc
         if keys[K_ESCAPE]:

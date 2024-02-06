@@ -9,12 +9,6 @@ class Board:
     grid = []
 
     score = 0
-
-    # directions
-    # 1 = "left"
-    # 3 = "right"
-    # 0 = "up"
-    # 2 = "down"
     
     colordict = {
         0: (255,255,255), # white
@@ -74,13 +68,14 @@ class Board:
             for col in range(4):
                 if self.grid[row][col] == 2048: return False
 
-        for i in range(4):
-            for j in range(1,4):
-                if self.grid[i][j-1] == 0 and self.grid[i][j] > 0:
-                    return True 
-                elif (self.grid[i][j-1] == self.grid[i][j]) and self.grid[i][j-1] != 0:
-                    return True
-        return False
+        # for i in range(4):
+        #     for j in range(1,4):
+        #         if self.grid[i][j-1] == 0 and self.grid[i][j] > 0:
+        #             return True 
+        #         elif (self.grid[i][j-1] == self.grid[i][j]) and self.grid[i][j-1] != 0:
+        #             return True
+        # return False
+        return True
 
     def moveTiles(self):
         # move tiles and save new coordinates

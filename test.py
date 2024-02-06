@@ -1,4 +1,4 @@
-import pygame,sys,time
+import pygame
 from pygame.locals import *
 from pygame.constants import *
 from random import *
@@ -60,11 +60,12 @@ def mainfunction(fromLoaded = False):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
-                sys.exit()
+            
+            print("event", event)
             
             if checkIfCanGo() == True:
                 if event.type == KEYDOWN:
-                    if isArrow(event.key):
+                    if isArrow(event):
                         rotations = getrotations(event.key)
                         addToUndo()
                         for i in range(0,rotations):

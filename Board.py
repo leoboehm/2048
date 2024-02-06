@@ -8,6 +8,8 @@ class Board:
 
     grid = []
 
+    score = 0
+
     # directions
     # 1 = "left"
     # 3 = "right"
@@ -97,7 +99,7 @@ class Board:
                 if self.grid[i][k] == self.grid[i][k+1] and self.grid[i][k] != 0:
                     self.grid[i][k] = self.doubleValue(self.grid[i][k])
                     self.grid[i][k+1] = 0
-                    self.sumScore(self.grid[i][k])
+                    self.updateScore(self.grid[i][k])
                     self.moveTiles()
     
     def rotateMatrix(self):
@@ -119,7 +121,7 @@ class Board:
     def doubleValue(self, value):
         return value * 2
     
-    def sumScore(self):
+    def updateScore(self, value):
         # calculate score
-        return 0
+        self.score += value
         

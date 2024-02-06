@@ -81,6 +81,9 @@ class App:
         
         if keys[K_ESCAPE]:
             self._running = False
+        
+        if keys[K_r]:
+           reseteGame 
 
     def endGame(self):
         # end the game
@@ -88,6 +91,7 @@ class App:
     
     # def resetGame(self):
     #     # reset game
+        ResetButton(400,400,50,50, 'Reset', print("Game Reset"))
 
 
 if __name__ == "__main__":

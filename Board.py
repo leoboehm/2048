@@ -34,11 +34,9 @@ class Board:
     
     def initGrid(self):
         # create a 4x4 matrix
-        for row in range(4):
-            self.grid.append([])
-            for col in range(4):
-                self.grid[row].append(0)
+        self.grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         
+        # spawn two tiles
         self.spawnTile()
         self.spawnTile()
 
@@ -56,7 +54,7 @@ class Board:
                                                         (margin + height) * row + margin,
                                                         width, height])
 
-            pygame.display.flip()
+        pygame.display.flip()
 
     def spawnTile(self):
         # spawn single tile on random free position
@@ -69,6 +67,9 @@ class Board:
        
     def canMove(self):
         # check whether tile movement is possible
+        for row in range(4):
+            for col in range(4):
+                if self.grid[row][col] == 2048: return False
         return True
 
     def moveTiles(self, direction):

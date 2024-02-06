@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys, time
 from pygame.locals import *
 from Board import *
 
@@ -40,6 +40,7 @@ class App:
                 else:
                     if self.board.canMove():
                         self.board.moveTiles(self.getKeyPressed())
+                    else: self.endGame()
 
                 pass
                 self.board.drawGrid()
@@ -66,8 +67,9 @@ class App:
         if keys[K_ESCAPE]:
             self._running = False
 
-    # def gameOver(self):
-    #     # end the game (Without closing the window)
+    def endGame(self):
+        # end the game
+        self._running = False
     
     # def resetGame(self):
     #     # reset game

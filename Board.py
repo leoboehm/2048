@@ -4,14 +4,15 @@ import random
 class Board:
     width: 100
     height: 100
+    # size: 4
 
     grid = []
 
     # directions
     # 1 = "left"
-    # 2 = "right"
-    # 3 = "up"
-    # 4 = "down"
+    # 3 = "right"
+    # 0 = "up"
+    # 2 = "down"
     
     colordict = {
         0: (255,255,255), # white
@@ -54,7 +55,7 @@ class Board:
                                                         (margin + height) * row + margin,
                                                         width, height])
 
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def spawnTile(self):
         # spawn single tile on random free position
@@ -70,16 +71,47 @@ class Board:
         for row in range(4):
             for col in range(4):
                 if self.grid[row][col] == 2048: return False
-        return True
 
-    def moveTiles(self, direction):
+        for i in range(4):
+            for j in range(1,4):
+                if self.grid[i][j-1] == 0 and self.grid[i][j] > 0:
+                    return True 
+                elif (self.grid[i][j-1] == self.grid[i][j]) and self.grid[i][j-1] != 0:
+                    return True
+        return False
+
+    def moveTiles(self):
         # move tiles and save new coordinates
-        print("moveTiles - direction: ", direction)
+        for i in range(4):
+            for j in range(3):
+                
+                while self.grid[i][j] == 0 and sum(self.grid[i][j:]) > 0:
+                    for k in range(j,3):
+                        self.grid[i][k] = self.grid[i][k+1]
+                        self.grid[i][3] = 0
     
-    # input tile: [first level grid index, second level grid index]
-    def mergeTiles(self, direction):
-        # merge tiles and double their value if their values are identical
-        return None
+    def mergeTiles(self):
+        # merge tiles and double their value if their values are identical 
+        for i in range(4):
+            for k in range(3):
+                if self.grid[i][k] == self.grid[i][k+1] and self.grid[i][k] != 0:
+                    self.grid[i][k] = self.doubleValue(self.grid[i][k])
+                    self.grid[i][k+1] = 0
+                    self.sumScore(self.grid[i][k])
+                    self.moveTiles()
+    
+    def rotateMatrix(self):
+        for i in range(2):
+            for k in range(i,3 - i):
+                temp1 = self.grid[i][k]
+                temp2 = self.grid[3 - k][i]
+                temp3 = self.grid[3 - i][3 - k]
+                temp4 = self.grid[k][3 - i]
+    
+                self.grid[3 - k][i] = temp1
+                self.grid[3 - i][3 - k] = temp2
+                self.grid[k][3 - i] = temp3
+                self.grid[i][k] = temp4
  
     def getTileColor(self, value):
         return self.colordict[value]

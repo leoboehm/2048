@@ -11,11 +11,8 @@ class App:
     # colors
     black = (0,0,0)  
     white = (255, 255, 255)
-    espresso = (54,17,0)
-    burlywood4 = (139,1115,85)
-    lightbrown = (190,149,111)
     beige = (243,217,177) 
-    redbrown = (139,35,35)
+
 
     def __init__(self):
         pygame.init()

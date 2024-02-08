@@ -10,6 +10,8 @@ class Board:
 
     score = 0
     
+    pygame.font.init()
+    pygame.font.get_init()
     font = pygame.font.Font("freesansbold.ttf",24)
 
     colordict = {

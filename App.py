@@ -8,6 +8,8 @@ class App:
 
     score = 0
 
+    
+
     # colors
     black = (0,0,0)  
     white = (255, 255, 255)
@@ -78,21 +80,25 @@ class App:
         if keys[K_ESCAPE]:
             self._running = False
         
-        if keys[K_r]:
-           reseteGame 
+        if keys[K_RETURN]:
+           self.resetGame() 
 
     def endGame(self):
         # end the game
         self._running = False
+        self.board.draw_restart
     
     # def resetGame(self):
     #     # reset game
         
     def resetGame(self):
         # reset the game
+        self.board.draw_restart
         self.score = 0
         self.board = Board(self._display)
-        ResetButton(400,400,50,50, 'Reset', print("Game Reset"))
+        #values = [[0 for _ in range(4) for _in range(4)]] schauen wo werte gesetzt werden
+        #count = 0 
+        #end_Game = False
 
 if __name__ == "__main__":
     app = App()

@@ -9,9 +9,9 @@ class App:
     score = 0
 
     # colors
-    black = (0,0,0)  
+    black = (0,0,0)
     white = (255, 255, 255)
-    beige = (243,217,177) 
+    beige = (243,217,177)
 
 
     def __init__(self):
@@ -26,7 +26,7 @@ class App:
         self.board = Board(self._gridDisplay)
         self.draw()
         pygame.display.flip()
-    
+
     def main(self):
         if self.on_init() == False:
             self._running = False
@@ -44,8 +44,9 @@ class App:
                             self.board.moveAndMergeTiles(direction)
                             direction = ""
                             self.board.spawnTile()
-                            
-                        self.draw()    
+
+                        self.draw()
+                        self.resetGame()
                 else: self.endGame()
 
                 pass
@@ -65,19 +66,19 @@ class App:
             return "U"
         if keys[K_DOWN]:
             return "D"
-        
+
         # end game on esc
         if keys[K_ESCAPE]:
             self._running = False
-        
+
         if keys[K_RETURN]:
-           self.resetGame() 
+           self.resetGame()
 
     def endGame(self):
         # end the game
         self._running = False
         self.resetGame()
-    
+
     def resetGame(self):
         # reset the game
         pygame.draw.rect(self._display,(0,0,0),pygame.Rect(100,320,330, 330))
@@ -87,7 +88,7 @@ class App:
         self._display.blit(game_over_text2,(100,420))
 
         self.score = 0
-    
+
     def draw(self):
         # set up position of the grid and text
         self._display.fill(self.beige)
@@ -96,7 +97,23 @@ class App:
         self.board.drawGrid()
         self._display.blit(self._gridDisplay,(40,60))
 
+    def startMenu(self):
+
+        while True :
+            pygame.display.set_caption("Start Menu")
+            self._display.fill(self.beige)
+            start_text = self.font.render("Play",True,(255,255,255))
+            self._display.blit(start_text,(200,200))
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        print("Pause")
+                if event .type == pygame.QUIT:
+                    False
+            pygame.quit()
+                
 
 if __name__ == "__main__":
     app = App()
-    app.main() 
+    app.main()

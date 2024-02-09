@@ -91,11 +91,11 @@ class App:
         
     def resetGame(self):
         # reset the game
-        pygame.draw.rect(self._display,(0,0,0),pygame.Rect(50,50,300, 300))
+        pygame.draw.rect(self._display,(0,0,0),pygame.Rect(100,320,330, 330))
         game_over_text1 = self.font.render("Game over!",True,(255,255,255))
         game_over_text2 = self.font.render("Press Enter to Restart",True,(255,255,255))
-        self._display.blit(game_over_text1,(130,65))
-        self._display.blit(game_over_text2,(70,105))
+        self._display.blit(game_over_text1,(100,380))
+        self._display.blit(game_over_text2,(100,420))
 
         self.score = 0
     

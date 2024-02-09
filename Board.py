@@ -4,16 +4,10 @@ import random
 class Board:
     width: 100
     height: 100
-    # size: 4
 
     grid = []
-
     score = 0
     
-    pygame.font.init()
-    pygame.font.get_init()
-    font = pygame.font.Font("freesansbold.ttf",24)
-
     colordict = {
         0: (255,255,255), # white
         2: (255,0,0), # red
@@ -31,6 +25,8 @@ class Board:
     
     def __init__(self, display):
         self._display = display
+        self.font = pygame.font.Font("freesansbold.ttf",24)
+
         self.initGrid()
     
     # initialize grid
@@ -92,100 +88,117 @@ class Board:
 
     # move tiles and save new coordinates
     def moveAndMergeTiles(self, direction):
+        # direction up
+        if direction == "U":
+            self.moveUp()
+        # direction down
+        if direction == "D":
+            self.moveDown()
+        # direction left
+        if direction == "L":
+            self.moveLeft()
+        # direction right
+        if direction == "R":
+            self.moveRight()
+
+    def moveUp(self):
         # remember merged positions to prevent multiple merges in one move
         mergedPositions = [[False for _ in range(4)] for _ in range(4)]
 
-        # direction up
-        if direction == "U":
-            for row in range(4):
-                for col in range(4):
-                    moveRange = 0
-                    if row > 0:
-                        # check how many rows the tile can move upwards
-                        for rowA in range(row):
-                            if self.grid[rowA][col] == 0:
-                                moveRange += 1
-                        # move tile upwards
-                        if moveRange > 0:
-                            self.grid[row - moveRange][col] = self.grid[row][col]
-                            self.grid[row][col] = 0
-                        # check whether the tile and it's neighbour have the same value and have not already merged
-                        if self.grid[row - moveRange - 1][col] == self.grid[row - moveRange][col] \
-                            and not mergedPositions[row - moveRange - 1][col] \
-                                and not mergedPositions[row - moveRange][col]:
-                            # merge tiles
-                            self.grid[row - moveRange - 1][col] *= 2
-                            self.grid[row - moveRange][col] = 0
-                            mergedPositions[row - moveRange - 1][col] = True
-        # direction down
-        if direction == "D":
-            for row in range(3):
-                for col in range(4):
-                    moveRange = 0
-                    # check how many rows the tile can move downwards
-                    for rowA in range(row + 1):
-                        if self.grid[3 - rowA][col] == 0:
+        for row in range(4):
+            for col in range(4):
+                moveRange = 0
+                if row > 0:
+                    # check how many rows the tile can move upwards
+                    for rowA in range(row):
+                        if self.grid[rowA][col] == 0:
                             moveRange += 1
-                    # move tile downwards
+                    # move tile upwards
                     if moveRange > 0:
-                        self.grid[2 - row + moveRange][col] = self.grid[row][col]
-                        self.grid[2 - row][col] = 0
-                    # check whether the tile and it's neighbour have the same value and have not already merged
-                    if 3 - row + moveRange <= 3:
-                        if self.grid[2 - row + moveRange][col] == self.grid[3 - row + moveRange][col] \
-                            and not mergedPositions[2 - row + moveRange][col] \
-                                and not mergedPositions[3 - row + moveRange][col]:
-                            # merge tiles
-                            self.grid[3 - row + moveRange][col] *= 2
-                            self.grid[2 - row + moveRange][col] = 0
-                            mergedPositions[3 - row + moveRange][col] = True
-        # direction left
-        if direction == "L":
-            for row in range(4):
-                for col in range(4):
-                    moveRange = 0
-                    # check how many rows the tile can move to the left
-                    for colA in range(col):
-                        if self.grid[row][colA] == 0:
-                            moveRange += 1
-                    # move tile to the left
-                    if moveRange > 0:
-                        self.grid[row][col - moveRange] = self.grid[row][col]
+                        self.grid[row - moveRange][col] = self.grid[row][col]
                         self.grid[row][col] = 0
                     # check whether the tile and it's neighbour have the same value and have not already merged
-                    if self.grid[row][col - moveRange] == self.grid[row][col - moveRange - 1] \
-                        and not mergedPositions[row][col - moveRange - 1] \
-                            and not mergedPositions[row][col - moveRange]:
+                    if self.grid[row - moveRange - 1][col] == self.grid[row - moveRange][col] \
+                        and not mergedPositions[row - moveRange - 1][col] \
+                            and not mergedPositions[row - moveRange][col]:
                         # merge tiles
-                        self.grid[row][col - moveRange - 1] *= 2
-                        self.grid[row][col - moveRange] = 0
-                        mergedPositions[row][col - moveRange - 1] = True
-        # direction right
-        if direction == "R":
-            for row in range(4):
-                for col in range(4):
-                    moveRange = 0
-                    # check how many rows the tile can move to the right
-                    for colA in range(col):
-                        if self.grid[row][3 - colA] == 0:
-                            moveRange += 1
-                    # move tile to the right
-                    if moveRange > 0:
-                        self.grid[row][3 - col + moveRange] = self.grid[row][3 - col]
-                        self.grid[row][3 - col] = 0
-                    # check whether the tile and it's neighbour have the same value and have not already merged
-                    if 4 - col + moveRange <= 3:
-                        if self.grid[row][4 - col + moveRange] == self.grid[row][3 - col + moveRange] \
-                            and not mergedPositions[row][4 - col + moveRange] \
-                                and not mergedPositions[row][3 - col + moveRange]:
-                            # merge tiles
-                            self.grid[row][4 - col + moveRange] *= 2
-                            self.grid[row][3 - col + moveRange] = 0
-                            mergedPositions[row][4 - col + moveRange] = True
+                        self.grid[row - moveRange - 1][col] *= 2
+                        self.grid[row - moveRange][col] = 0
+                        mergedPositions[row - moveRange - 1][col] = True
+
+    def moveDown(self):
+        # remember merged positions to prevent multiple merges in one move
+        mergedPositions = [[False for _ in range(4)] for _ in range(4)]
+
+        for row in range(3):
+            for col in range(4):
+                moveRange = 0
+                # check how many rows the tile can move downwards
+                for rowA in range(row + 1):
+                    if self.grid[3 - rowA][col] == 0:
+                        moveRange += 1
+                # move tile downwards
+                if moveRange > 0:
+                    self.grid[2 - row + moveRange][col] = self.grid[row][col]
+                    self.grid[2 - row][col] = 0
+                # check whether the tile and it's neighbour have the same value and have not already merged
+                if 3 - row + moveRange <= 3:
+                    if self.grid[2 - row + moveRange][col] == self.grid[3 - row + moveRange][col] \
+                        and not mergedPositions[2 - row + moveRange][col] \
+                            and not mergedPositions[3 - row + moveRange][col]:
+                        # merge tiles
+                        self.grid[3 - row + moveRange][col] *= 2
+                        self.grid[2 - row + moveRange][col] = 0
+                        mergedPositions[3 - row + moveRange][col] = True
+
+    def moveLeft(self):
+        # remember merged positions to prevent multiple merges in one move
+        mergedPositions = [[False for _ in range(4)] for _ in range(4)]
+        
+        for row in range(4):
+            for col in range(4):
+                moveRange = 0
+                # check how many rows the tile can move to the left
+                for colA in range(col):
+                    if self.grid[row][colA] == 0:
+                        moveRange += 1
+                # move tile to the left
+                if moveRange > 0:
+                    self.grid[row][col - moveRange] = self.grid[row][col]
+                    self.grid[row][col] = 0
+                # check whether the tile and it's neighbour have the same value and have not already merged
+                if self.grid[row][col - moveRange] == self.grid[row][col - moveRange - 1] \
+                    and not mergedPositions[row][col - moveRange - 1] \
+                        and not mergedPositions[row][col - moveRange]:
+                    # merge tiles
+                    self.grid[row][col - moveRange - 1] *= 2
+                    self.grid[row][col - moveRange] = 0
+                    mergedPositions[row][col - moveRange - 1] = True
+    
+    def moveRight(self):
+        # remember merged positions to prevent multiple merges in one move
+        mergedPositions = [[False for _ in range(4)] for _ in range(4)]
+    
+        for row in range(4):
+            for col in range(4):
+                moveRange = 0
+                # check how many rows the tile can move to the right
+                for colA in range(col):
+                    if self.grid[row][3 - colA] == 0:
+                        moveRange += 1
+                # move tile to the right
+                if moveRange > 0:
+                    self.grid[row][3 - col + moveRange] = self.grid[row][3 - col]
+                    self.grid[row][3 - col] = 0
+                # check whether the tile and it's neighbour have the same value and have not already merged
+                if 4 - col + moveRange <= 3:
+                    if self.grid[row][4 - col + moveRange] == self.grid[row][3 - col + moveRange] \
+                        and not mergedPositions[row][4 - col + moveRange] \
+                            and not mergedPositions[row][3 - col + moveRange]:
+                        # merge tiles
+                        self.grid[row][4 - col + moveRange] *= 2
+                        self.grid[row][3 - col + moveRange] = 0
+                        mergedPositions[row][4 - col + moveRange] = True
 
     def getTileColor(self, value):
         return self.colordict[value]
-    
-    def updateScore(self, value):
-        # calculate score
-        self.score += value

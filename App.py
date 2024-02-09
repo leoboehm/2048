@@ -86,9 +86,6 @@ class App:
         self._running = False
         self.resetGame()
     
-    # def resetGame(self):
-    #     # reset game
-        
     def resetGame(self):
         # reset the game
         pygame.draw.rect(self._display,(0,0,0),pygame.Rect(50,50,300, 300))

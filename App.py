@@ -18,11 +18,14 @@ class App:
         pygame.init()
         self._running = True
         self._display = pygame.display.set_mode((self.windowWidth,self.windowHeight))
-    
+        self.font = pygame.font.Font("freesansbold.ttf",24)
+
     def on_init(self):
         pygame.display.set_caption('2048')
         self._display.fill(self.beige)
-        self.board = Board(self._display)
+        self._gridDisplay = pygame.Surface((245,245))
+        self.board = Board(self._gridDisplay)
+        self.draw()
         pygame.display.flip()
     
     def main(self):
@@ -43,8 +46,7 @@ class App:
                             direction = ""
                             self.board.spawnTile()
                             
-                        self.board.drawGrid()
-                            
+                        self.draw()    
                 else: self.endGame()
 
                 pass
@@ -54,6 +56,10 @@ class App:
 
     def getScore(self):
         self.score = self.board.score
+    
+    def displayScore(self):
+        score_text = self.font.render(f'Score: {self.getScore()}',True, (255,255,255))
+        self._display.blit(score_text,(305,30))
     
     def getKeyPressed(self):
         # check which key gets pressed and return direction
@@ -78,19 +84,27 @@ class App:
     def endGame(self):
         # end the game
         self._running = False
-        self.board.drawRestart
+        self.resetGame()
     
     # def resetGame(self):
     #     # reset game
         
     def resetGame(self):
         # reset the game
-        self.board.drawRestart
+        pygame.draw.rect(self._display,(0,0,0),pygame.Rect(50,50,300, 300))
+        game_over_text1 = self.font.render("Game over!",True,(255,255,255))
+        game_over_text2 = self.font.render("Press Enter to Restart",True,(255,255,255))
+        self._display.blit(game_over_text1,(130,65))
+        self._display.blit(game_over_text2,(70,105))
+
         self.score = 0
-        self.board = Board(self._display)
-        
-        self.endGame()
-        
+    
+    def draw(self):
+        # set up position of the grid and text
+        self.displayScore()
+        self.board.drawGrid()
+        self._display.blit(self._gridDisplay,(40,60))
+
 
 if __name__ == "__main__":
     app = App()

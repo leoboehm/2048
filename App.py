@@ -37,17 +37,11 @@ class App:
 
                 if self.board.canMove():
                     if event.type == pygame.KEYDOWN:
-                        rotations = self.getKeyPressed()
-                        for i in range(0,rotations):
-                            self.board.rotateMatrix()
- 
-                        if self.board.canMove():
-                            self.board.moveTiles()
-                            self.board.mergeTiles()
+                        direction = self.getKeyPressed()
+                        if direction != "":
+                            self.board.moveAndMergeTiles(direction)
+                            direction = ""
                             self.board.spawnTile()
- 
-                        for j in range(0,(4-rotations)%4):
-                            self.board.rotateMatrix()
                             
                         self.board.drawGrid()
                             
@@ -62,17 +56,17 @@ class App:
         self.score = self.board.score
     
     def getKeyPressed(self):
-        # check which key gets pressed and return rotations
+        # check which key gets pressed and return direction
         keys = pygame.key.get_pressed()
 
         if keys[K_LEFT]:
-            return 0
+            return "L"
         if keys[K_RIGHT]:
-            return 2
+            return "R"
         if keys[K_UP]:
-            return 1
+            return "U"
         if keys[K_DOWN]:
-            return 3
+            return "D"
         
         # end game on esc
         if keys[K_ESCAPE]:

@@ -54,7 +54,10 @@ class Board:
                 pygame.draw.rect(self._display, color, [(margin + width)* col + margin,
                                                         (margin + height) * row + margin,
                                                         width, height])
-
+                if(self.grid[row][col] > 0):
+                    value_text = self.font.render(str(self.grid[row][col]), True, "black")
+                    text_rect = value_text.get_rect(center=((margin + width)* col + margin + int(width/2), (margin + height) * row + margin + int(height/2)))
+                    self._display.blit(value_text, text_rect)
         # pygame.display.flip()
 
     def spawnTile(self):

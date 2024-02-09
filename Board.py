@@ -55,7 +55,7 @@ class Board:
                                                         (margin + height) * row + margin,
                                                         width, height])
 
-        # pygame.display.flip()
+        pygame.display.flip()
 
     def spawnTile(self):
         # spawn single tile on random free position
@@ -123,12 +123,3 @@ class Board:
     def updateScore(self, value):
         # calculate score
         self.score += value
-
-    def drawRestart(self):
-        pygame.draw.rect(self._display,(0,0,0),[50,50,300],0,10)
-        game_over_text1 = self.font.render("Game over!",True,(255,255,255))
-        game_over_text2 = self.font.render("Press Enter to Restart",True,(255,255,255))
-        self._display.blit(game_over_text1,(130,65))
-        self._display.blit(game_over_text2,(70,105))
-
-        

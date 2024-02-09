@@ -33,16 +33,16 @@ class Board:
         self._display = display
         self.initGrid()
     
+    # initialize grid
     def initGrid(self):
-        # create a 4x4 matrix
+        # create an empty 4x4 matrix
         self.grid = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         
-        # spawn two tiles
+        # spawn 2 tiles
         self.spawnTile()
         self.spawnTile()
 
-        self.drawGrid()
-
+    # draw board
     def drawGrid(self) :  
         width = 55
         height = 55
@@ -51,16 +51,18 @@ class Board:
         for row in range(4):
             for col in range(4):
                 color = self.getTileColor(self.grid[row][col])
+                # draw tile
                 pygame.draw.rect(self._display, color, [(margin + width)* col + margin,
                                                         (margin + height) * row + margin,
                                                         width, height])
+                # draw tile value
                 if(self.grid[row][col] > 0):
                     value_text = self.font.render(str(self.grid[row][col]), True, "black")
                     text_rect = value_text.get_rect(center=((margin + width)* col + margin + int(width/2), (margin + height) * row + margin + int(height/2)))
                     self._display.blit(value_text, text_rect)
 
+    # spawn single tile on random free position
     def spawnTile(self):
-        # spawn single tile on random free position
         row = random.randint(0,3)
         col = random.randint(0,3)
 
@@ -68,25 +70,32 @@ class Board:
             self.grid[row][col] = random.choice([2, 4])
         else: self.spawnTile()
        
+    # check whether tile movement is possible
     def canMove(self):
-        # check whether tile movement is possible
         for row in range(4):
             for col in range(4):
+                # check whether 2048 is reached
                 if self.grid[row][col] == 2048: return False
-
-        for row in range(4):
-            for col in range(1,4):
-                if self.grid[row][col] == 2048: return False
-                if self.grid[row][col-1] == 0 and self.grid[row][col] > 0:
-                    return True 
-                elif self.grid[row][col-1] == self.grid[row][col] and self.grid[row][col-1] != 0:
-                    return True
+                # check for empty fields
+                if self.grid[row][col] == 0: return True 
+                # check for possible merges
+                # up or down
+                if row > 0:
+                    if self.grid[row - 1][col] == self.grid[row][col]:
+                        return True
+                # left or right
+                if col > 0:
+                    if self.grid[row][col - 1] == self.grid[row][col]:
+                        return True
+        # return false per default if none of the conditions are met
         return False
 
     # move tiles and save new coordinates
     def moveAndMergeTiles(self, direction):
+        # remember merged positions to prevent multiple merges in one move
         mergedPositions = [[False for _ in range(4)] for _ in range(4)]
 
+        # direction up
         if direction == "U":
             for row in range(4):
                 for col in range(4):
@@ -108,8 +117,7 @@ class Board:
                             self.grid[row - moveRange - 1][col] *= 2
                             self.grid[row - moveRange][col] = 0
                             mergedPositions[row - moveRange - 1][col] = True
-
-
+        # direction down
         if direction == "D":
             for row in range(3):
                 for col in range(4):
@@ -131,7 +139,7 @@ class Board:
                             self.grid[3 - row + moveRange][col] *= 2
                             self.grid[2 - row + moveRange][col] = 0
                             mergedPositions[3 - row + moveRange][col] = True
-
+        # direction left
         if direction == "L":
             for row in range(4):
                 for col in range(4):
@@ -152,7 +160,7 @@ class Board:
                         self.grid[row][col - moveRange - 1] *= 2
                         self.grid[row][col - moveRange] = 0
                         mergedPositions[row][col - moveRange - 1] = True
-
+        # direction right
         if direction == "R":
             for row in range(4):
                 for col in range(4):

@@ -84,19 +84,19 @@ class App:
     def endGame(self):
         # end the game
         self._running = False
-        self.board.draw_restart
+        self.board.drawRestart
     
     # def resetGame(self):
     #     # reset game
         
     def resetGame(self):
         # reset the game
-        self.board.draw_restart
+        self.board.drawRestart
         self.score = 0
         self.board = Board(self._display)
-        #values = [[0 for _ in range(4) for _in range(4)]] schauen wo werte gesetzt werden
-        #count = 0 
-        #end_Game = False
+        
+        self.endGame()
+        
 
 if __name__ == "__main__":
     app = App()

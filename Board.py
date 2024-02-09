@@ -125,6 +125,8 @@ class Board:
                         self.grid[row - moveRange - 1][col] *= 2
                         self.grid[row - moveRange][col] = 0
                         mergedPositions[row - moveRange - 1][col] = True
+                        # update score
+                        self.score += self.grid[row - moveRange - 1][col]
 
     def moveDown(self):
         # remember merged positions to prevent multiple merges in one move
@@ -150,6 +152,8 @@ class Board:
                         self.grid[3 - row + moveRange][col] *= 2
                         self.grid[2 - row + moveRange][col] = 0
                         mergedPositions[3 - row + moveRange][col] = True
+                        # update score
+                        self.score += self.grid[3 - row + moveRange][col]
 
     def moveLeft(self):
         # remember merged positions to prevent multiple merges in one move
@@ -174,6 +178,8 @@ class Board:
                     self.grid[row][col - moveRange - 1] *= 2
                     self.grid[row][col - moveRange] = 0
                     mergedPositions[row][col - moveRange - 1] = True
+                    # update score
+                    self.score += self.grid[row][col - moveRange - 1]
     
     def moveRight(self):
         # remember merged positions to prevent multiple merges in one move
@@ -199,6 +205,8 @@ class Board:
                         self.grid[row][4 - col + moveRange] *= 2
                         self.grid[row][3 - col + moveRange] = 0
                         mergedPositions[row][4 - col + moveRange] = True
+                        # update score
+                        self.score += self.grid[row][4 - col + moveRange]
 
     def getTileColor(self, value):
         return self.colordict[value]

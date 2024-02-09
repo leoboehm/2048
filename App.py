@@ -22,7 +22,6 @@ class App:
 
     def on_init(self):
         pygame.display.set_caption('2048')
-        self._display.fill(self.beige)
         self._gridDisplay = pygame.Surface((245,245))
         self.board = Board(self._gridDisplay)
         self.draw()
@@ -54,13 +53,6 @@ class App:
 
         pygame.quit()
 
-    def getScore(self):
-        self.score = self.board.score
-    
-    def displayScore(self):
-        score_text = self.font.render(f'Score: {self.getScore()}',True, (255,255,255))
-        self._display.blit(score_text,(305,30))
-    
     def getKeyPressed(self):
         # check which key gets pressed and return direction
         keys = pygame.key.get_pressed()
@@ -98,7 +90,9 @@ class App:
     
     def draw(self):
         # set up position of the grid and text
-        self.displayScore()
+        self._display.fill(self.beige)
+        score_text = self.font.render("Score: " + str(self.board.score),True, (255,255,255))
+        self._display.blit(score_text,(305,30))
         self.board.drawGrid()
         self._display.blit(self._gridDisplay,(40,60))
 

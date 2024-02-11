@@ -45,7 +45,7 @@ class App:
                             self.board.moveAndMergeTiles(direction)
                             direction = ""
                             self.board.spawnTile()
-
+                        
                         self.draw()
                         self.resetGame()
                 else: self.endGame()
@@ -98,28 +98,35 @@ class App:
         self.board.drawGrid()
         self._display.blit(self._gridDisplay,(40,60))
 
-    # def startMenu(self):
-    #     game_start = False
+    def startMenu(self):
+        game_start = False
 
-    #     while True :
-    #         pygame.display.set_caption("Start Menu")
-    #         self._display.fill(self.beige)
+        while True :
+            pygame.display.set_caption("Start Menu")
+            self._display.fill(self.beige)
 
-    #         #check if space is pressed
-    #         if game_start == True:
-    #             self.main()
-    #         else:
-    #             start_text = self.font.render("Play",True,(255,255,255))
-    #             self._display.blit(start_text,(200,200))
+            #check if space is pressed
+            if game_start == True:
+                self.main()
+            else:
+                startText = self.font.render("Play",True,self.white)
+                instructionText = self.font.render("How to play: ",True,self.white)
+                startTextRect = startText.get_rect()
+                instructionTextRect = instructionText.get_rect()
+                self._display.blit(startTextRect,(200,200))
+                self._display.blit(instructionTextRect,(100,250))
 
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.KEYDOWN:
-    #                 if event.key == pygame.K_SPACE:
-    #                     self.main()
-    #                     print("Start") 
-    #             if event .type == pygame.QUIT:
-    #                 False
-    #         pygame.quit()
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self._display
+                        print("Start") 
+                if event .type == pygame.QUIT:
+                    
+                    pygame.quit()
+                    quit()
+                pygame.display.update()
                 
 
 if __name__ == "__main__":

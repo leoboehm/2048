@@ -10,17 +10,17 @@ class Board:
     
     colordict = {
         0: (255,255,255), # white
-        2: (255,0,0), # red
-        4: (0,128,0), # green
-        8: (156,39,176), # purple
-        16: (103,58,183), # deep purple
+        2: (188,143,143), # rosybrown
+        4: (244,164,96), # sandybrown
+        8: (205,133,63), # peru
+        16: (210,105,30), # chocolate
         32: (255,87,34), # deep orange
         64: (0,150,136), # teal
-        128: (139,195,74), # light green
-        256: (234,30,99), # pink
+        128: (139,69,19), # saddlebrown
+        256: (160,82,45), # sienna
         512: (255,152,0), # orange
-        1024: (33,150,136), # blue
-        2048: (121,85,72) # brown
+        1024: (165,42,42), # brown
+        2048: (128,0,0) # maroon
     }
     
     def __init__(self, display):

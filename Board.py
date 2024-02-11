@@ -57,14 +57,23 @@ class Board:
                     text_rect = value_text.get_rect(center=((margin + width)* col + margin + int(width/2), (margin + height) * row + margin + int(height/2)))
                     self._display.blit(value_text, text_rect)
 
+    # check whether there are free spots on the grid and return True or False
+    def canSpawnTile(self):
+        for row in range(4):
+            for col in range(4):
+                if self.grid[row][col] == 0:
+                    return True
+        return False
+
     # spawn single tile on random free position
     def spawnTile(self):
-        row = random.randint(0,3)
-        col = random.randint(0,3)
+        if self.canSpawnTile():
+            row = random.randint(0,3)
+            col = random.randint(0,3)
 
-        if self.grid[row][col] == 0:
-            self.grid[row][col] = random.choice([2, 4])
-        else: self.spawnTile()
+            if self.grid[row][col] == 0:
+                self.grid[row][col] = random.choice([2, 4])
+            else: self.spawnTile()
        
     # check whether tile movement is possible
     def canMove(self):

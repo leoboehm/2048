@@ -76,7 +76,7 @@ class Board:
             else: self.spawnTile()
        
     # check whether tile movement is possible
-    def canMove(self):
+    def checkMovePossible(self):
         for row in range(4):
             for col in range(4):
                 # check whether 2048 is reached
@@ -93,6 +93,14 @@ class Board:
                     if self.grid[row][col - 1] == self.grid[row][col]:
                         return True
         # return false per default if none of the conditions are met
+        return False
+
+    # return True if at least one tile reached value 2048
+    def checkGameWon(self):
+        for row in range(4):
+            for col in range(4):
+                if self.grid[row][col] == 2048:
+                    return True
         return False
 
     # move tiles and save new coordinates

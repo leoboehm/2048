@@ -13,6 +13,7 @@ class App:
     beige = (243,217,177)
     tan = (210,180,140)
     red = (230, 0, 0)
+    green = (0, 200, 0)
 
     def __init__(self):
         pygame.init()
@@ -42,15 +43,18 @@ class App:
                 
                 self.getKeyPressed()
 
-                if self.board.canMove():
+                if self.board.checkMovePossible():
                     if self.direction != "":
                         self.board.moveAndMergeTiles(self.direction)
                         self.direction = ""
                         self.board.spawnTile()
                         
                     self.drawIngameScreen()
-
-                else: self.drawGameOverScreen()
+                    
+                    if self.board.checkGameWon():
+                        self.drawGameWonScreen()
+                elif not self.board.checkGameWon():
+                    self.drawGameOverScreen()
 
                 pass
                 pygame.display.update()
@@ -81,13 +85,18 @@ class App:
     # set up grid position & ingame texts
     def drawIngameScreen(self):
         self._display.fill(self.beige)
-        scoreText = self.fontNormal.render("Score: " + str(self.board.score),True, self.white)
+        scoreColor = self.green if self.board.checkGameWon() else self.white
+        scoreText = self.fontNormal.render("Score: " + str(self.board.score),True, scoreColor)
         self._display.blit(scoreText,(315,60))
         pygame.draw.rect(self._display,self.tan,pygame.Rect(40,350,350,100))
         restartText = self.fontNormal.render("Press Enter to Restart",True,self.white)
         self._display.blit(restartText,(50,385))
         self.board.drawGrid()
         self._display.blit(self._gridDisplay,(40,60))
+
+    def drawGameWonScreen(self):
+        gameWonText = self.fontBig.render("YOU WON!",True,self.green)
+        self._display.blit(gameWonText,(60,165))
 
     # draw game over screen overlay
     def drawGameOverScreen(self):

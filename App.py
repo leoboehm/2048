@@ -105,38 +105,7 @@ class App:
 
     # reset board & score and start over
     def resetGame(self):
-        self.on_init()
-
-    # def startMenu(self):
-    #     game_start = False
-
-    #     while True :
-    #         pygame.display.set_caption("Start Menu")
-    #         self._display.fill(self.beige)
-
-    #         #check if space is pressed
-    #         if game_start == True:
-    #             self.main()
-    #         else:
-    #             startText = self.fontNormal.render("Play",True,self.white)
-    #             instructionText = self.fontNormal.render("How to play: ",True,self.white)
-    #             startTextRect = startText.get_rect()
-    #             instructionTextRect = instructionText.get_rect()
-    #             self._display.blit(startTextRect,(200,200))
-    #             self._display.blit(instructionTextRect,(100,250))
-
-
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.KEYDOWN:
-    #                 if event.key == pygame.K_SPACE:
-    #                     self._display
-    #                     print("Start") 
-    #             if event .type == pygame.QUIT:
-                    
-    #                 pygame.quit()
-    #                 quit()
-    #             pygame.display.update()
-                
+        self.on_init()    
 
 if __name__ == "__main__":
     app = App()
